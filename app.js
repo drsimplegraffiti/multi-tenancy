@@ -1,16 +1,19 @@
+require("dotenv").config();
 const express = require("express");
 const connectDB = require("./db/db");
 const itemsRouter = require("./routes/items");
 const tenantsRouter = require("./routes/tenant");
 const app = express();
 
-connectDB()
+/* Connecting to the database. */
+connectDB();
 
-app.use(express.json({ extended: false }))
+/* Parsing the body of the request. */
+app.use(express.json({ extended: false }));
 
 app.use("/items", itemsRouter);
 app.use("/tenants", tenantsRouter);
-
-app.listen(3000, () => {
-  console.log("Listening on port 3000...");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
 });

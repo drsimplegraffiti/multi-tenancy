@@ -4,6 +4,12 @@ const Tenant = require("../models/tenant");
 const ItemSchema = require("../models/item");
 const router = express.Router();
 
+/**
+ * It takes a tenantId, finds the tenant in the Tenant collection, and then creates a new connection to
+ * the tenant's database.
+ * @param tenantId - The id of the tenant
+ * @returns A connection to the tenant's database.
+ */
 const getTenantDb = async (tenantId) => {
   const tenant = await Tenant.findById(tenantId);
   if (!tenant) throw new Error("Tenant not found");
@@ -27,6 +33,7 @@ router.get("/:tenantId/items", async (req, res) => {
 });
 
 // create a new item
+/* Creating a new item in the database. */
 router.post("/:tenantId/items", async (req, res) => {
   const tenantId = req.params.tenantId;
   const tenantDb = await getTenantDb(tenantId);
